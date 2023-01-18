@@ -77,7 +77,8 @@ namespace AbyssC
                 "OpIgualdad", "PuntoComa", "Coma", "ParentesisOpen", "ParentesisClose",
                 "CorcheteOpen", "CorcheteClose", "Igual", "_if", "_while", "_return",
                 "_else", "_terminal", "ERROR"};
-            Separadores = new string[20] {"\r", "\n", "\t", " ","+", "-", "*", "/", "<", ">", "(", ")", "{", "}", "=", "!", "|", "&", ",",";"};
+            Separadores = new string[20] {"\r", "\n", "\t", " ","+", "-", "*", "/", "<",
+                ">", "(", ")", "{", "}", "=", "!", "|", "&", ",",";"};
             
             InitializeComponent();
         }
@@ -100,6 +101,7 @@ namespace AbyssC
                     int x = -1;
                     if(word != " " && word != "\t" && word != "")
                     {
+                        
                         x = AnalizadorLexico(word);
                     }
                     if (x > -1)
@@ -107,9 +109,36 @@ namespace AbyssC
                         Lexico.Add(word);
                         Results.Text += word + " -> " + Resultados[x] + "\r\n";
                     }
-                    if(text[i] != ' ' && text[i] != '\t')
+                    word = text[i].ToString();
+                    if (text[i] != ' ' && text[i] != '\t')
                     {
-                        x = AnalizadorLexico(text[i].ToString());
+                        if (text[i] == '=' || text[i] == '!' ||
+                            text[i] == '<' || text[i] == '>')
+                        {
+                            if(text[i+1] == '=')
+                            {
+                                word = text[i].ToString();
+                                word += "=";
+                                i++;
+                            }
+                        }
+                        if(text[i] == '&')
+                        {
+                            if(text[i+1] == '&')
+                            {
+                                word = "&&";
+                                i++;
+                            }
+                        }
+                        if(text[i] == '|')
+                        {
+                            if(text[i+1] == '|')
+                            {
+                                word = "||";
+                                i++;
+                            }
+                        }
+                        x = AnalizadorLexico(word);
                     }
                     else
                     {
@@ -118,8 +147,8 @@ namespace AbyssC
                     
                     if (x > -1)
                     {
-                        Lexico.Add(text[i].ToString());
-                        Results.Text += text[i] + " -> " + Resultados[x] + "\r\n";
+                        Lexico.Add(word);
+                        Results.Text += word + " -> " + Resultados[x] + "\r\n";
                     }
                     word = "";
                 }
