@@ -141,8 +141,8 @@ namespace AbyssC
             { -28,0,0,0,-28,0,0,0,0,0,0,0,0,0,0,0,0,-28,0,-28,-28,-28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
             { -29,0,0,0,-29,0,0,0,0,0,0,0,0,0,0,0,0,-29,0,-29,-29,-29,-29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
             { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} };
-        public List<string> pila;
-        public string[] MensajesError = new string[23];
+        public Pila pila;
+        public string[] MensajesError = new string[24];
         public string[] resultados = new string[10];
         string programa;
 
@@ -182,10 +182,10 @@ namespace AbyssC
                 "_else", "_terminal", "ERROR"};
             Separadores = new string[20] {"\r", "\n", "\t", " ","+", "-", "*", "/", "<", ">", "(", ")", "{", "}", "=", "!", "|", "&", ",",";"};
 
-            MensajesError = new string[23] {"identificador", "entero", "real", "cadena",
+            MensajesError = new string[24] {"identificador", "entero", "real", "cadena",
                                "tipo", "opSum", "opMul", "opRela",
                                "opOr", "opAnd", "opNot", "opIgualdad",
-                               ";", ",", "(", ")", "{", "}", "=", "if", "while", "return", "else"};
+                               ";", ",", "(", ")", "{", "}", "=", "if", "while", "return", "else", "$"};
             resultados = new string[10]{
                 "reservadas","aritmeticos","logicos","identificador",
                 "hexadecimal","float","Int","arreglo", "simbolo", "no_identificado"};
@@ -271,7 +271,7 @@ namespace AbyssC
             #endregion
             //Fase 2: Analisis Sintactico
             #region Sintactico
-            pila = new List<string>();
+            pila = new Pila();
             AnalizadorSintactico(programa);
             #endregion
         }
@@ -441,13 +441,13 @@ namespace AbyssC
         public void AnalizadorSintactico(string programa)
         {
             int fila, columna;
-            pila.Add("$");
-            pila.Add("0");
+            pila.Push(new EP("$"));
+            pila.Push(new EP("0"));
 
             //El numero que está en el tope de la fila + el número del identificador
             //int|Reservadas|4 main|Identificador|0 (|Simbolo|14 )|Simbolo|15 {|Simbolo|16 }|Simbolo|17
-            string elemento;
-            
+            EP elemento;
+            Results_Sintactico.Text += "\r\n" + "-----Analisis----" + "\r\n\r\n";
             int i = 0, j, control, accion = 0;
             char c;
             string data = "", tipo = "0", token = "";
@@ -484,19 +484,18 @@ namespace AbyssC
                                 j++;
                             }
                             //Aplicar el algoritmo
-                            fila = Int32.Parse(pila.Last<string>());
+                            fila = Int32.Parse(pila.Top().cadena);
 
                             columna = Int32.Parse(tipo);
-
 
                             accion = LR[fila, columna];
                             if (token != "$")
                             {
-                                Results_Sintactico.Text += accion.ToString() + "\r\n";
+                                //Results_Sintactico.Text += accion.ToString() + "\r\n";
                             }
                             if (accion < 0)
                             {
-                                Results_Sintactico.Text += accion.ToString() + "\r\n";
+                                //Results_Sintactico.Text += accion.ToString() + "\r\n";
                                 switch (accion)
                                 {
                                     case -1:
@@ -507,30 +506,37 @@ namespace AbyssC
                                     case -2:
                                         //R1
                                         PopPila(1);
-                                        fila = Int32.Parse(pila.Last<string>());
-                                        elemento = "<programa>";
-                                        pila.Add(elemento);
+                                        fila = Int32.Parse(pila.Top().cadena);
+                                        elemento = new EP("<programa>");
+
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
+
                                         accion = LR[fila, 24];
-                                        elemento = accion.ToString();
-                                        pila.Add(elemento);
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
+                                        
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
+
                                         i--;
                                         break;
                                     case -3:
                                         //R2
                                         PopPila(0);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Definiciones>";
+                                        elemento = new EP("<Definiciones>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 25];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
                                         break;
 
@@ -538,17 +544,18 @@ namespace AbyssC
                                         //R3
                                         PopPila(2);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Definiciones>";
+                                        elemento = new EP("<Definiciones>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 25];
-
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
+                                       
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -557,18 +564,18 @@ namespace AbyssC
                                         //R4
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Definicion>";
+                                        elemento = new EP("<Definicion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 26];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
                                         break;
 
@@ -577,18 +584,18 @@ namespace AbyssC
 
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Definicion>";
+                                        elemento = new EP("<Definicion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 26];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
                                         break;
 
@@ -596,18 +603,18 @@ namespace AbyssC
                                         //R6
                                         PopPila(4);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<DefVar>";
+                                        elemento = new EP("<DefVar>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 27];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
                                         break;
 
@@ -616,18 +623,18 @@ namespace AbyssC
 
                                         PopPila(0);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<ListaVar>";
+                                        elemento = new EP("<ListaVar>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 28];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
                                         break;
 
@@ -635,18 +642,18 @@ namespace AbyssC
                                         //R8
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<ListaVar>";
+                                        elemento = new EP("<ListaVar>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 28];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
                                         break;
 
@@ -654,17 +661,18 @@ namespace AbyssC
                                         //R9
                                         PopPila(6);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<DefFunc>";
+                                        elemento = new EP("<DefFunc>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 29];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -674,17 +682,18 @@ namespace AbyssC
 
                                         PopPila(0);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Parametros>";
+                                        elemento = new EP("<Parametros>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 30];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
                                         break;
 
@@ -692,17 +701,18 @@ namespace AbyssC
                                         //R11
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Parametros>";
+                                        elemento = new EP("<Parametros>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 30];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
                                         break;
 
@@ -710,17 +720,18 @@ namespace AbyssC
                                         //R12
                                         PopPila(0);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<ListaParam>";
+                                        elemento = new EP("<ListaParam>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 31];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
                                         break;
 
@@ -728,17 +739,18 @@ namespace AbyssC
                                         //R13
                                         PopPila(4);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<ListaParam>";
+                                        elemento = new EP("<ListaParam>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 31];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
                                         break;
 
@@ -747,18 +759,18 @@ namespace AbyssC
 
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<BloqFunc>";
+                                        elemento = new EP("<BloqFunc>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 32];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -767,18 +779,18 @@ namespace AbyssC
                                         //R15
                                         PopPila(0);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<DefLocales>";
+                                        elemento = new EP("<DefLocales>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 33];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -788,17 +800,18 @@ namespace AbyssC
                                         //R16
                                         PopPila(2);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<DefLocales>";
+                                        elemento = new EP("<DefLocales>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 33];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -808,18 +821,18 @@ namespace AbyssC
                                         //R17
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<DefLocal>";
+                                        elemento = new EP("<DefLocal>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 34];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -829,18 +842,18 @@ namespace AbyssC
                                         i--;
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<DefLocal>";
+                                        elemento = new EP("<DefLocal>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 34];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -850,18 +863,18 @@ namespace AbyssC
                                         //R19
                                         PopPila(0);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Sentencias>";
+                                        elemento = new EP("<Sentencias>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 35];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -869,18 +882,18 @@ namespace AbyssC
                                         //R20
                                         PopPila(2);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Sentencias>";
+                                        elemento = new EP("<Sentencias>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 35];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -890,18 +903,18 @@ namespace AbyssC
                                         //R21
                                         PopPila(4);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Sentencia>";
+                                        elemento = new EP("<Sentencia>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 36];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -910,18 +923,18 @@ namespace AbyssC
                                         //R22
                                         PopPila(6);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Sentencia>";
+                                        elemento = new EP("<Sentencia>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 36];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -930,18 +943,18 @@ namespace AbyssC
                                         //R23
                                         PopPila(5);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Sentencia>";
+                                        elemento = new EP("<Sentencia>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 36];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -950,18 +963,18 @@ namespace AbyssC
                                         //R24
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Sentencia>";
+                                        elemento = new EP("<Sentencia>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 36];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -970,18 +983,18 @@ namespace AbyssC
                                         //R25
                                         PopPila(2);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Sentencia>";
+                                        elemento = new EP("<Sentencia>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 36];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -989,18 +1002,18 @@ namespace AbyssC
                                         //R26
                                         PopPila(0);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Otro>";
+                                        elemento = new EP("<Otro>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 37];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1009,18 +1022,18 @@ namespace AbyssC
                                         //R27
                                         PopPila(2);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Otro>";
+                                        elemento = new EP("<Otro>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 37];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1029,18 +1042,18 @@ namespace AbyssC
                                         //R28
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Bloque>";
+                                        elemento = new EP("<Bloque>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 38];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1049,18 +1062,18 @@ namespace AbyssC
                                         //R29
                                         PopPila(0);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<ValorRegresa>";
+                                        elemento = new EP("<ValorRegresa>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 39];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1069,18 +1082,18 @@ namespace AbyssC
                                         //R30
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<ValorRegresa>";
+                                        elemento = new EP("<ValorRegresa>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 39];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1089,18 +1102,18 @@ namespace AbyssC
                                         //R31
                                         PopPila(0);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Argumentos>";
+                                        elemento = new EP("<Argumentos>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 40];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1109,18 +1122,18 @@ namespace AbyssC
                                         //R32
                                         PopPila(2);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Argumentos>";
+                                        elemento = new EP("<Argumentos>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 40];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1129,18 +1142,18 @@ namespace AbyssC
                                         //R33
                                         PopPila(0);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<ListaArgumentos>";
+                                        elemento = new EP("<ListaArgumentos>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 41];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1149,18 +1162,18 @@ namespace AbyssC
                                         //R34
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<ListaArgumentos>";
+                                        elemento = new EP("<ListaArgumentos>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 41];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1169,18 +1182,18 @@ namespace AbyssC
                                         //R35
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Termino>";
+                                        elemento = new EP("<Termino>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 42];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1190,18 +1203,18 @@ namespace AbyssC
 
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Termino>";
+                                        elemento = new EP("<Termino>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 42];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1210,18 +1223,18 @@ namespace AbyssC
                                         //R37
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Termino>";
+                                        elemento = new EP("<Termino>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 42];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1230,18 +1243,18 @@ namespace AbyssC
                                         //R38
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Termino>";
+                                        elemento = new EP("<Termino>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 42];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1250,18 +1263,18 @@ namespace AbyssC
                                         //R39
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Termino>";
+                                        elemento = new EP("<Termino>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 42];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1270,18 +1283,18 @@ namespace AbyssC
                                         //R40
                                         PopPila(4);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<LlamadaFunc>";
+                                        elemento = new EP("<LlamadaFunc>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 43];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1290,18 +1303,18 @@ namespace AbyssC
                                         //R41
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<SentenciaBloque>";
+                                        elemento = new EP("<SentenciaBloque>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 44];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1310,18 +1323,18 @@ namespace AbyssC
                                         //R42
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<SentenciaBloque>";
+                                        elemento = new EP("<SentenciaBloque>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 44];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1330,18 +1343,18 @@ namespace AbyssC
                                         //R43
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Expresion>";
+                                        elemento = new EP("<Expresion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 45];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1350,18 +1363,18 @@ namespace AbyssC
                                         //R44
                                         PopPila(2);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Expresion>";
+                                        elemento = new EP("<Expresion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 45];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1370,18 +1383,18 @@ namespace AbyssC
                                         //R45
                                         PopPila(2);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Expresion>";
+                                        elemento = new EP("<Expresion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 45];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1389,18 +1402,18 @@ namespace AbyssC
                                     case -47:
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Expresion>";
+                                        elemento = new EP("<Expresion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 45];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1409,18 +1422,18 @@ namespace AbyssC
                                         //R47
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Expresion>";
+                                        elemento = new EP("<Expresion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 45];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1430,18 +1443,18 @@ namespace AbyssC
 
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Expresion>";
+                                        elemento = new EP("<Expresion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 45];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1450,18 +1463,18 @@ namespace AbyssC
                                         //R49
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Expresion>";
+                                        elemento = new EP("<Expresion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 45];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1470,18 +1483,18 @@ namespace AbyssC
                                         //R50
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Expresion>";
+                                        elemento = new EP("<Expresion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 45];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1490,18 +1503,18 @@ namespace AbyssC
                                         //R51
                                         PopPila(3);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Expresion>";
+                                        elemento = new EP("<Expresion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 45];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1510,18 +1523,18 @@ namespace AbyssC
                                         //R52
                                         PopPila(1);
 
-                                        fila = Int32.Parse(pila.Last<string>());
+                                        fila = Int32.Parse(pila.Top().cadena);
 
-                                        elemento = "<Expresion>";
+                                        elemento = new EP("<Expresion>");
 
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         accion = LR[fila, 45];
+                                        //Results_Sintactico.Text += accion.ToString();
+                                        elemento = new EP(accion.ToString());
 
-                                        elemento = accion.ToString();
-
-                                        pila.Add(elemento);
-
+                                        pila.Push(elemento);
+                                        //Results_Sintactico.Text += elemento.cadena;
                                         i--;
 
                                         break;
@@ -1540,14 +1553,14 @@ namespace AbyssC
                             }
                             else
                             {
-                                elemento = token;
-                                pila.Add(elemento);
-                                elemento = accion.ToString();
-                                pila.Add(elemento);
+                                elemento = new EP(token);
+                                pila.Push(elemento);
+                                elemento = new EP(accion.ToString());
+                                pila.Push(elemento);
                             }
 
                             data = "";
-
+                            Results_Sintactico.Text += pila.Show() + "\r\n";
                             break;
                         }
                     default:
@@ -1565,7 +1578,7 @@ namespace AbyssC
             PopTokens = tokens * 2;
             while(i<PopTokens)
             {
-                pila.RemoveAt(pila.Count-1);
+                pila.Pop();
                 i++;
             }
         }
@@ -1583,7 +1596,7 @@ namespace AbyssC
             }
             else if (error == 23)
             {
-            msgError = ";";
+                msgError = "}";
             }
             Results_Console.Text += "Syntax Error ' " + MensajesError[error] + " '" + "\r\n";
             Results_Console.Text += "Se esperaba -> ' " + msgError + " '";
