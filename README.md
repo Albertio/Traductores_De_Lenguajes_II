@@ -33,7 +33,7 @@ Ahora, tras tener todo listo pasamos a la parte de codificacion.
 
 Para ello se muestra a detalle lo realizado en la carpeta:
 
-https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo1
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo1">Modulo 1</a>
 
 Los resultados del Analisis Lexico:
 El codigo que se va a probar:
@@ -77,6 +77,41 @@ Para comenzar a trabajar e implementar los nuevos metodos y algoritmos se modifi
 Para ver mas detalles y el proceso de codificacion consultar la carpeta:
 
 <a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo2">Modulo 2</a>
+
+Para finalizar, comprobamos las entradas y salidas de nuestro analizador sintactico, asi como el estado de la pila durante todo el proceso de analisis.
+
+Comprobacion:
+
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/8.png)
+
+Contenido en la pila:
+$0int5
+$0int5main8
+$0int5main8(11
+$0int5main8(11<Parametros>14
+$0int5main8(11<Parametros>14)17
+$0int5main8(11<Parametros>14)17{20
+$0int5main8(11<Parametros>14)17{20return30
+$0int5main8(11<Parametros>14)17{20return30047
+$0int5main8(11<Parametros>14)17{20return30<Termino>44
+$0int5main8(11<Parametros>14)17{20return30<Expresion>40
+$0int5main8(11<Parametros>14)17{20return30<ValorRegresa>39
+$0int5main8(11<Parametros>14)17{20return30<ValorRegresa>39;57
+$0int5main8(11<Parametros>14)17{20<Sentencia>26
+$0int5main8(11<Parametros>14)17{20<DefLocal>24
+$0int5main8(11<Parametros>14)17{20<DefLocal>24<DefLocales>34
+$0int5main8(11<Parametros>14)17{20<DefLocales>23
+$0int5main8(11<Parametros>14)17{20<DefLocales>23}33
+$0int5main8(11<Parametros>14)17<BloqFunc>19
+$0<DefFunc>6
+$0<Definicion>3
+$0<Definicion>3<Definiciones>7
+$0<Definiciones>2
+$0<programa>1
+$0<programa>1
+
+*Observamos un analisis exitoso, sin errores ni problemas, lo que deberia ser siempre que una entrada no contenga errores como los siguientes.
+
 Modulo 3. Analizador Semantico
 
 
