@@ -9,7 +9,7 @@ Identificador - Entero - Real - Cadena - Tipo - OpSuma - OpMul - OpRelac - OpOr 
 
 Todos estos estan definidos en la tabla de la actividad como simbolos lexicos para ser reconocidos:
 
-! [alt tag] (https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/1.png)
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/1.png)
 
 Modulo 2. Analizador Sintactico
 
