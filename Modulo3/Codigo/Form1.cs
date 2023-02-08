@@ -211,6 +211,7 @@ namespace AbyssC
             Results_Sintactico.Text = "";
             Results_Semantico.Text = "";
             Lexico = new List<string>();
+            semantico = new Semantico();
             //Fase 1: Analisis Lexico
             #region Lexico
             string text = console.Text; //Todo el texto en cuestion
@@ -1615,8 +1616,16 @@ namespace AbyssC
                     {
                         valor = "<Funcion>";
                     }
-                    Results_Semantico.Text += "int" + " " + variable + " = " + valor + "\r\n";
-                    semantico.AddDefinido(variable, "int", valor);
+                    if(semantico.FindInt(variable) > -1 || semantico.FindFloat(variable) > -1)
+                    {
+                        Results_Console.Text +="'" + variable + "' -> was defined before" + "\r\n";
+                    }
+                    else
+                    {
+                        Results_Semantico.Text += "int" + " " + variable + " = " + valor + "\r\n";
+                        semantico.AddDefinido(variable, "int", valor);
+                    }
+                    
                 }
                 //float definido
                 if (element == "float:tipo:4")
@@ -1636,8 +1645,16 @@ namespace AbyssC
                     {
                         valor = "<Funcion>";
                     }
-                    Results_Semantico.Text += "float" + " " + variable + " = " + valor + "\r\n";
-                    semantico.AddDefinido(variable, "float", valor);
+                    if (semantico.FindFloat(variable) > -1 || semantico.FindInt(variable) > -1)
+                    {
+                        Results_Console.Text += "'" + variable + "' -> was defined before" + "\r\n";
+                    }
+                    else
+                    {
+                        Results_Semantico.Text += "float" + " " + variable + " = " + valor + "\r\n";
+                        semantico.AddDefinido(variable, "float", valor);
+                    }
+                    
                 }
                 i++;
             }
