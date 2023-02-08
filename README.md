@@ -8,7 +8,7 @@ Se realizan diccionarios para cada uno de los tipos de datos establecidos en la 
 Identificador - Entero - Real - Cadena - Tipo - OpSuma - OpMul - OpRelac - OpOr - OpAnd - OpNot - OpIgualdad - PuntoComa - Coma - ParentesisOpen - ParentesisClose - CorcheteOpen - CorcheteClose - Igual - _if - _while - _return - _else - _terminal.
 
 Todos estos estan definidos en la tabla de la actividad como simbolos lexicos para ser reconocidos:
-! [alt tag] ()
+! [alt tag] (https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/1.png)
 
 Modulo 2. Analizador Sintactico
 
