@@ -14,13 +14,20 @@ namespace AbyssC
         List<string> floatDefined = new List<string>();
         List<string> floatValue = new List<string>();
 
-        List<string> voidDefined = new List<string>();
+        List<string> voidFuncion = new List<string>();
+        List<List<string>> voidParametros = new List<List<string>>();
+
+        List<string> intFuncion = new List<string>();
+        List<List<string>> intParametros = new List<List<string>>();
+        
+        List<string> floatFuncion = new List<string>();
+        List<List<string>> floatParametros = new List<List<string>>();
 
         public Semantico()
         {
 
         }
-        public void AddDefinido(string cadena, string tipo, string valor)
+        public void AddDefinido(string cadena, string tipo, string valor, bool funcion, List<string> parametros)
         {
             if(tipo == "int")
             {
@@ -32,9 +39,23 @@ namespace AbyssC
                 floatDefined.Add(cadena);
                 floatValue.Add(valor);
             }
-            else if(tipo == "void")
+            if(funcion)
             {
-                voidDefined.Add(cadena);
+                if (tipo == "void")
+                {
+                    voidFuncion.Add(cadena);
+                    voidParametros.Add(parametros);
+                }
+                if(tipo == "int")
+                {
+                    intFuncion.Add(cadena);
+                    intParametros.Add(parametros);
+                }
+                if(tipo == "float")
+                {
+                    floatFuncion.Add(cadena);
+                    floatParametros.Add(parametros);
+                }
             }
         }
         public int FindInt(string cadena)
@@ -66,12 +87,12 @@ namespace AbyssC
             return -1;
         }
 
-        public int FindVoid(string cadena)
+        public int FindVoidFunction(string cadena)
         {
             int i = 0;
-            while (i < voidDefined.Count)
+            while (i < voidFuncion.Count)
             {
-                if (voidDefined[i] == cadena)
+                if (voidFuncion[i] == cadena)
                 {
                     return i;
                 }
@@ -79,6 +100,46 @@ namespace AbyssC
             }
 
             return -1;
+        }
+        public int FindIntFunction(string cadena)
+        {
+            int i = 0;
+            while (i < intFuncion.Count)
+            {
+                if (intFuncion[i] == cadena)
+                {
+                    return i;
+                }
+                i++;
+            }
+
+            return -1;
+        }
+        public int FindFloatFunction(string cadena)
+        {
+            int i = 0;
+            while (i < floatFuncion.Count)
+            {
+                if (floatFuncion[i] == cadena)
+                {
+                    return i;
+                }
+                i++;
+            }
+
+            return -1;
+        }
+        public List<string> ParametrosVoidFuncion(int posicion)
+        {
+            return voidParametros[posicion];
+        }
+        public List<string> ParametrosIntFuncion(int posicion)
+        {
+            return intParametros[posicion];
+        }
+        public List<string> ParametrosFloatFuncion(int posicion)
+        {
+            return floatParametros[posicion];
         }
     }
 }

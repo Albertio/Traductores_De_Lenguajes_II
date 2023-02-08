@@ -1624,13 +1624,17 @@ namespace AbyssC
         {
             //Comprobar todo lo que esta definido
             Results_Semantico.Text = "---Definiciones---" + "\r\n";
-
+            List<string> parametros = new List<string>();
+            string parametro;
+            string tipo = "";
             int i = 0;
+            int funcion;
             string variable;
             string valor;
             string element;
             while (i < programa.Count)
             {
+                parametros = new List<string>();
                 variable = "";
                 valor = "0";
                 element = programa[i];
@@ -1648,18 +1652,65 @@ namespace AbyssC
                             variable += caracter;
                         }
                     }
-                    if (programa[i + 2][0] == '(')
+                    if (programa[i + 2] == "(:parentesisOpen:14")
                     {
                         valor = "<Funcion>";
+                        if (semantico.FindFloat(variable) > -1 || semantico.FindInt(variable) > -1 ||
+                         semantico.FindVoidFunction(variable) > -1 || semantico.FindIntFunction(variable) > -1 || semantico.FindFloatFunction(variable) > -1)
+                        {
+                            Results_Console.Text += "'" + variable + "' -> was defined before" + "\r\n";
+                        }
+                        else
+                        {
+                            Results_Semantico.Text += "int" + " " + variable + " = " + valor + "\r\n";
+                            while (programa[i + 2] != "):parentesisClose:15")
+                            {
+                                if (programa[i + 2].Contains("tipo"))
+                                {
+                                    tipo = "";
+                                    foreach (char x in programa[i + 2])
+                                    {
+                                        if (x == ':')
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            tipo += x;
+                                        }
+                                    }
+                                }
+                                if (programa[i + 2].Contains("identificador"))
+                                {
+                                    parametro = "";
+                                    foreach (char x in programa[i + 2])
+                                    {
+                                        if (x == ':')
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            parametro += x;
+                                        }
+                                    }
+                                    Results_Semantico.Text +="\t" + tipo + " " + parametro + " <LocalParametro> inside -> " + variable + "\r\n";
+                                    parametros.Add(parametro);
+                                }
+                                i++;
+                            }
+                            semantico.AddDefinido(variable,"int", valor, true, parametros);
+                        }
                     }
-                    if(semantico.FindInt(variable) > -1 || semantico.FindFloat(variable) > -1)
+                    else if (semantico.FindFloat(variable) > -1 || semantico.FindInt(variable) > -1 ||
+                         semantico.FindVoidFunction(variable) > -1 || semantico.FindIntFunction(variable) > -1 || semantico.FindFloatFunction(variable) > -1)
                     {
                         Results_Console.Text +="'" + variable + "' -> was defined before" + "\r\n";
                     }
                     else
                     {
                         Results_Semantico.Text += "int" + " " + variable + " = " + valor + "\r\n";
-                        semantico.AddDefinido(variable, "int", valor);
+                        semantico.AddDefinido(variable, "int", valor, false, parametros);
                     }
                     
                 }
@@ -1677,18 +1728,65 @@ namespace AbyssC
                             variable += caracter;
                         }
                     }
-                    if (programa[i + 2][0] == '(')
+                    if (programa[i + 2] == "(:parentesisOpen:14")
                     {
                         valor = "<Funcion>";
+                        if (semantico.FindFloat(variable) > -1 || semantico.FindInt(variable) > -1 ||
+                         semantico.FindVoidFunction(variable) > -1 || semantico.FindIntFunction(variable) > -1 || semantico.FindFloatFunction(variable) > -1)
+                        {
+                            Results_Console.Text += "'" + variable + "' -> was defined before" + "\r\n";
+                        }
+                        else
+                        {
+                            Results_Semantico.Text += "float" + " " + variable + " = " + valor + "\r\n";
+                            while (programa[i + 2] != "):parentesisClose:15")
+                            {
+                                if (programa[i + 2].Contains("tipo"))
+                                {
+                                    tipo = "";
+                                    foreach (char x in programa[i + 2])
+                                    {
+                                        if (x == ':')
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            tipo += x;
+                                        }
+                                    }
+                                }
+                                if (programa[i + 2].Contains("identificador"))
+                                {
+                                    parametro = "";
+                                    foreach (char x in programa[i + 2])
+                                    {
+                                        if (x == ':')
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            parametro += x;
+                                        }
+                                    }
+                                    Results_Semantico.Text += "\t" + tipo + " " + parametro + " <LocalParametro> inside -> " + variable + "\r\n";
+                                    parametros.Add(parametro);
+                                }
+                                i++;
+                            }
+                            semantico.AddDefinido(variable, "float", valor, true, parametros);
+                        }
                     }
-                    if (semantico.FindFloat(variable) > -1 || semantico.FindInt(variable) > -1)
+                    else if (semantico.FindFloat(variable) > -1 || semantico.FindInt(variable) > -1 ||
+                         semantico.FindVoidFunction(variable) > -1 || semantico.FindIntFunction(variable) > -1 || semantico.FindFloatFunction(variable) > -1)
                     {
                         Results_Console.Text += "'" + variable + "' -> was defined before" + "\r\n";
                     }
                     else
                     {
                         Results_Semantico.Text += "float" + " " + variable + " = " + valor + "\r\n";
-                        semantico.AddDefinido(variable, "float", valor);
+                        semantico.AddDefinido(variable, "float", valor, false, parametros);
                     }
                     
                 }
@@ -1705,17 +1803,54 @@ namespace AbyssC
                             variable += caracter;
                         }
                     }
-                    if (programa[i + 2][0] == '(')
+                    if (programa[i + 2] == "(:parentesisOpen:14")
                     {
                         valor = "<Funcion>";
-                        if (semantico.FindVoid(variable) > -1 || semantico.FindVoid(variable) > -1)
+                        if (semantico.FindFloat(variable) > -1 || semantico.FindInt(variable) > -1 ||
+                         semantico.FindVoidFunction(variable) > -1 || semantico.FindIntFunction(variable) > -1 || semantico.FindFloatFunction(variable) > -1)
                         {
                             Results_Console.Text += "'" + variable + "' -> was defined before" + "\r\n";
                         }
                         else
                         {
                             Results_Semantico.Text += "void" + " " + variable + " = " + valor + "\r\n";
-                            semantico.AddDefinido(variable, "void", valor);
+                            while (programa[i + 2] != "):parentesisClose:15")
+                            {
+                                if (programa[i + 2].Contains("tipo"))
+                                {
+                                    tipo = "";
+                                    foreach (char x in programa[i + 2])
+                                    {
+                                        if (x == ':')
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            tipo += x;
+                                        }
+                                    }
+                                }
+                                if (programa[i + 2].Contains("identificador"))
+                                {
+                                    parametro = "";
+                                    foreach (char x in programa[i + 2])
+                                    {
+                                        if (x == ':')
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            parametro += x;
+                                        }
+                                    }
+                                    Results_Semantico.Text += "\t" + tipo + " " + parametro + " <LocalParametro> inside -> " + variable + "\r\n";
+                                    parametros.Add(parametro);
+                                }
+                                i++;
+                            }
+                            semantico.AddDefinido(variable, "void", valor, true, parametros);
                         }
                     }
                     else
@@ -1731,6 +1866,7 @@ namespace AbyssC
             i = 0;
             while (i < programa.Count)
             {
+                parametro = "";
                 variable = "";
                 element = programa[i];
 
@@ -1747,10 +1883,108 @@ namespace AbyssC
                             variable += caracter;
                         }
                     }
-                    if (semantico.FindInt(variable) == -1 && semantico.FindFloat(variable) == -1 && semantico.FindVoid(variable) == -1)
+                    if (semantico.FindInt(variable) == -1 && semantico.FindFloat(variable) == -1 && 
+                        semantico.FindVoidFunction(variable) == -1 && semantico.FindIntFunction(variable) == -1 && semantico.FindFloatFunction(variable) == -1)
                     {
                         Results_Console.Text += "'" + variable + "'" + " -> No Definida" + "\r\n";
                         error = true;
+                    }
+                    //Si es funcion flotante
+                    funcion = semantico.FindFloatFunction(variable);
+                    if (funcion != -1)
+                    {
+                        if(programa[i + 3] != "{:corcheteOpen:16" && programa[i + 3] != ";:puntoComa:12")
+                        {
+                            i += 3;
+                            while(programa[i] != "{:corcheteOpen:16" && programa[i + 3] != ";:puntoComa:12")
+                            {
+                                if(programa[i].Contains("identificador"))
+                                {
+                                    foreach (char caracter in programa[i])
+                                    {
+                                        if (caracter == ':')
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            parametro += caracter;
+                                        }
+                                    }
+                                    if (!semantico.ParametrosFloatFuncion(funcion).Contains(parametro))
+                                    {
+                                        Results_Console.Text += "'" + parametro + "'" + " -> No Definida" + "\r\n";
+                                    }
+                                    parametro = "";
+                                }
+                                i++;
+                            }
+                        }
+                        
+                    }
+                    funcion = semantico.FindVoidFunction(variable);
+                    if (funcion != -1)
+                    {
+                        if (programa[i + 3] != "{:corcheteOpen:16" && programa[i + 3] != ";:puntoComa:12")
+                        {
+                            i += 3;
+                            while (programa[i] != "{:corcheteOpen:16" && programa[i + 3] != ";:puntoComa:12")
+                            {
+                                if (programa[i].Contains("identificador"))
+                                {
+                                    foreach (char caracter in programa[i])
+                                    {
+                                        if (caracter == ':')
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            parametro += caracter;
+                                        }
+                                    }
+                                    if (!semantico.ParametrosVoidFuncion(funcion).Contains(parametro))
+                                    {
+                                        Results_Console.Text += "'" + parametro + "'" + " -> No Definida" + "\r\n";
+                                    }
+                                    parametro = "";
+                                }
+                                i++;
+                            }
+                        }
+
+                    }
+                    funcion = semantico.FindIntFunction(variable);
+                    if (funcion != -1)
+                    {
+                        if (programa[i + 3] != "{:corcheteOpen:16" && programa[i + 3] != ";:puntoComa:12")
+                        {
+                            i += 3;
+                            while (programa[i] != "{:corcheteOpen:16" && programa[i + 3] != ";:puntoComa:12")
+                            {
+                                if (programa[i].Contains("identificador"))
+                                {
+                                    foreach (char caracter in programa[i])
+                                    {
+                                        if (caracter == ':')
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            parametro += caracter;
+                                        }
+                                    }
+                                    if (!semantico.ParametrosIntFuncion(funcion).Contains(parametro))
+                                    {
+                                        Results_Console.Text += "'" + parametro + "'" + " -> No Definida" + "\r\n";
+                                    }
+                                    parametro = "";
+                                }
+                                i++;
+                            }
+                        }
+
                     }
                 }
                 i++;
@@ -1762,7 +1996,6 @@ namespace AbyssC
             }
             //Comprobar que todo lo que se usa y esta definido se esta operando correctamente
             i = 0;
-            string tipo;
             string variable2;
             int entero;
             float flotante;
@@ -1774,7 +2007,7 @@ namespace AbyssC
                 if (element.Contains("identificador"))
                 {
                     //Operacion inminente
-                    if(programa[i + 1] == "=:igual:18")
+                    if (programa[i + 1] == "=:igual:18")
                     {
                         //Variable tras =
                         foreach (char caracter in element)
@@ -1788,6 +2021,8 @@ namespace AbyssC
                                 variable += caracter;
                             }
                         }
+
+                        //Variables
                         if (semantico.FindInt(variable) > -1)
                         {
                             tipo = "int";
@@ -1814,30 +2049,58 @@ namespace AbyssC
                             }
                             if (tipo == "int")
                             {
-                                if(Int32.TryParse(variable2, out entero))
+                                //Funciones
+                                if (semantico.FindVoidFunction(variable2) > -1)
+                                {
+                                    Results_Console.Text += "'" + variable2 + "'" + " -> Incoherencia de tipo" + "\r\n";
+                                    error = true;
+                                }
+                                else if (semantico.FindIntFunction(variable2) > -1)
+                                {
+                                }
+                                else if (semantico.FindFloatFunction(variable2) > -1)
+                                {
+                                    Results_Console.Text += "'" + variable2 + "'" + " -> Incoherencia de tipo" + "\r\n";
+                                    error = true;
+                                }
+                                else if (Int32.TryParse(variable2, out entero))
                                 {
                                     
                                 }
                                 else if(semantico.FindInt(variable2) == -1)
                                 {
-                                    Results_Console.Text += " ' " + variable2 + " ' " + " -> Incoherencia de tipo" + "\r\n";
+                                    Results_Console.Text += "'" + variable2 + "'" + " -> Incoherencia de tipo" + "\r\n";
                                     error = true;
                                 }
                             }
                             else
                             {
-                                if (float.TryParse(variable2,out flotante))
+                                //Funciones
+                                if (semantico.FindVoidFunction(variable2) > -1)
+                                {
+                                    Results_Console.Text += "'" + variable2 + "'" + " -> Incoherencia de tipo" + "\r\n";
+                                    error = true;
+                                }
+                                else if (semantico.FindIntFunction(variable2) > -1)
+                                {
+                                    Results_Console.Text += "'" + variable2 + "'" + " -> Incoherencia de tipo" + "\r\n";
+                                    error = true;
+                                }
+                                else if (semantico.FindFloatFunction(variable2) > -1)
+                                {
+                                }
+                                else if (float.TryParse(variable2,out flotante))
                                 {
 
                                 }
                                 else if (semantico.FindFloat(variable2) == -1)
                                 {
-                                    Results_Console.Text += " ' " + variable2 + " ' " + " -> Incoherencia de tipo" + "\r\n";
+                                    Results_Console.Text += "'" + variable2 + "'" + " -> Incoherencia de tipo" + "\r\n";
                                     error = true;
                                 }
                             }
                             
-                        } while (programa[i + 1] != ";:puntoComa:12");
+                        } while (programa[i + 1] != ";:puntoComa:12" && programa[i + 1] != "(:parentesisOpen:14");
                     }
                     else if (programa[i + 1] == "=:opIgualdad:11")
                     {
@@ -1853,13 +2116,19 @@ namespace AbyssC
                                 variable += caracter;
                             }
                         }
-                        if (semantico.FindInt(variable) > -1)
+                        if (semantico.FindInt(variable) > -1 || semantico.FindIntFunction(variable) > -1)
                         {
                             tipo = "int";
                         }
-                        else
+                        else if(semantico.FindFloat(variable) > -1 || semantico.FindFloatFunction(variable) > -1)
                         {
                             tipo = "float";
+                        }
+                        else
+                        {
+                            Results_Console.Text += "'" + variable + "'" + " -> void non call-able" + "\r\n";
+                            error = true;
+                            break;
                         }
                         do
                         {
@@ -1879,7 +2148,21 @@ namespace AbyssC
                             }
                             if (tipo == "int")
                             {
-                                if (Int32.TryParse(variable2, out entero))
+                                if (semantico.FindVoidFunction(variable2) > -1)
+                                {
+                                    Results_Console.Text += "'" + variable2 + "'" + " -> Incoherencia de tipo" + "\r\n";
+                                    error = true;
+                                }
+                                else if (semantico.FindIntFunction(variable2) > -1)
+                                {
+                                    
+                                }
+                                else if (semantico.FindFloatFunction(variable2) > -1)
+                                {
+                                    Results_Console.Text += "'" + variable2 + "'" + " -> Incoherencia de tipo" + "\r\n";
+                                    error = true;
+                                }
+                                else if (Int32.TryParse(variable2, out entero))
                                 {
 
                                 }
@@ -1891,7 +2174,21 @@ namespace AbyssC
                             }
                             else
                             {
-                                if (float.TryParse(variable2, out flotante))
+                                if (semantico.FindVoidFunction(variable2) > -1)
+                                {
+                                    Results_Console.Text += "'" + variable2 + "'" + " -> Incoherencia de tipo" + "\r\n";
+                                    error = true;
+                                }
+                                else if (semantico.FindIntFunction(variable2) > -1)
+                                {
+                                    Results_Console.Text += "'" + variable2 + "'" + " -> Incoherencia de tipo" + "\r\n";
+                                    error = true;
+                                }
+                                else if (semantico.FindFloatFunction(variable2) > -1)
+                                {
+                                    
+                                }
+                                else if (float.TryParse(variable2, out flotante))
                                 {
 
                                 }
@@ -1902,7 +2199,7 @@ namespace AbyssC
                                 }
                             }
 
-                        } while (programa[i + 1] != "):parentesisClose:15" && programa[i + 1] != "&:opAnd:9" && programa[i + 1] != "|:opOr:8");
+                        } while (programa[i + 1] != "):parentesisClose:15" && programa[i + 1] != "&:opAnd:9" && programa[i + 1] != "|:opOr:8" && programa[i + 1] != "(:parentesisOpen:14");
                     }
                 }
                 i++;

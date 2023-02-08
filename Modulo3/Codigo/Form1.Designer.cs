@@ -47,6 +47,8 @@ namespace AbyssC
             this.Results_Console = new System.Windows.Forms.TextBox();
             this.Results_Semantico = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.Archivo.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,7 +84,7 @@ namespace AbyssC
             this.Archivo.Location = new System.Drawing.Point(0, 0);
             this.Archivo.Name = "Archivo";
             this.Archivo.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.Archivo.Size = new System.Drawing.Size(900, 31);
+            this.Archivo.Size = new System.Drawing.Size(1160, 25);
             this.Archivo.TabIndex = 1;
             this.Archivo.Text = "toolStrip1";
             // 
@@ -166,11 +168,11 @@ namespace AbyssC
             this.Results.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.Results.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Results.ForeColor = System.Drawing.Color.White;
-            this.Results.Location = new System.Drawing.Point(691, 57);
+            this.Results.Location = new System.Drawing.Point(787, 57);
             this.Results.Multiline = true;
             this.Results.Name = "Results";
             this.Results.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.Results.Size = new System.Drawing.Size(197, 142);
+            this.Results.Size = new System.Drawing.Size(361, 142);
             this.Results.TabIndex = 3;
             this.Results.TabStop = false;
             // 
@@ -179,7 +181,7 @@ namespace AbyssC
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("p5hatty", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(687, 202);
+            this.label2.Location = new System.Drawing.Point(783, 202);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 19);
             this.label2.TabIndex = 4;
@@ -190,7 +192,7 @@ namespace AbyssC
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("p5hatty", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(687, 35);
+            this.label3.Location = new System.Drawing.Point(783, 35);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(62, 19);
             this.label3.TabIndex = 4;
@@ -204,11 +206,11 @@ namespace AbyssC
             this.Results_Sintactico.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.Results_Sintactico.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Results_Sintactico.ForeColor = System.Drawing.Color.White;
-            this.Results_Sintactico.Location = new System.Drawing.Point(691, 224);
+            this.Results_Sintactico.Location = new System.Drawing.Point(787, 224);
             this.Results_Sintactico.Multiline = true;
             this.Results_Sintactico.Name = "Results_Sintactico";
             this.Results_Sintactico.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.Results_Sintactico.Size = new System.Drawing.Size(201, 258);
+            this.Results_Sintactico.Size = new System.Drawing.Size(361, 258);
             this.Results_Sintactico.TabIndex = 3;
             this.Results_Sintactico.TabStop = false;
             this.Results_Sintactico.WordWrap = false;
@@ -253,7 +255,7 @@ namespace AbyssC
             this.Results_Semantico.Multiline = true;
             this.Results_Semantico.Name = "Results_Semantico";
             this.Results_Semantico.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.Results_Semantico.Size = new System.Drawing.Size(223, 425);
+            this.Results_Semantico.Size = new System.Drawing.Size(315, 164);
             this.Results_Semantico.TabIndex = 7;
             this.Results_Semantico.TabStop = false;
             this.Results_Semantico.WordWrap = false;
@@ -269,12 +271,42 @@ namespace AbyssC
             this.label5.TabIndex = 8;
             this.label5.Text = "Semantico";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("p5hatty", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(458, 226);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(160, 19);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Tabla de Simbolos";
+            // 
+            // textBox1
+            // 
+            this.textBox1.AllowDrop = true;
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox1.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.Color.White;
+            this.textBox1.Location = new System.Drawing.Point(462, 248);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBox1.Size = new System.Drawing.Size(315, 235);
+            this.textBox1.TabIndex = 10;
+            this.textBox1.TabStop = false;
+            this.textBox1.WordWrap = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.ClientSize = new System.Drawing.Size(900, 494);
+            this.ClientSize = new System.Drawing.Size(1160, 494);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.Results_Semantico);
             this.Controls.Add(this.Results_Console);
@@ -320,6 +352,8 @@ namespace AbyssC
         private System.Windows.Forms.TextBox Results_Console;
         private System.Windows.Forms.TextBox Results_Semantico;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
