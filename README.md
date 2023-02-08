@@ -85,29 +85,53 @@ Comprobacion:
 ![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/8.png)
 
 Contenido en la pila:
+
 $0int5
+
 $0int5main8
+
 $0int5main8(11
+
 $0int5main8(11<Parametros>14
+	
 $0int5main8(11<Parametros>14)17
+	
 $0int5main8(11<Parametros>14)17{20
+	
 $0int5main8(11<Parametros>14)17{20return30
+	
 $0int5main8(11<Parametros>14)17{20return30047
+	
 $0int5main8(11<Parametros>14)17{20return30<Termino>44
+	
 $0int5main8(11<Parametros>14)17{20return30<Expresion>40
+	
 $0int5main8(11<Parametros>14)17{20return30<ValorRegresa>39
+	
 $0int5main8(11<Parametros>14)17{20return30<ValorRegresa>39;57
+	
 $0int5main8(11<Parametros>14)17{20<Sentencia>26
+	
 $0int5main8(11<Parametros>14)17{20<DefLocal>24
+	
 $0int5main8(11<Parametros>14)17{20<DefLocal>24<DefLocales>34
+	
 $0int5main8(11<Parametros>14)17{20<DefLocales>23
+	
 $0int5main8(11<Parametros>14)17{20<DefLocales>23}33
+	
 $0int5main8(11<Parametros>14)17<BloqFunc>19
+	
 $0<DefFunc>6
+	
 $0<Definicion>3
+	
 $0<Definicion>3<Definiciones>7
+	
 $0<Definiciones>2
+	
 $0<programa>1
+	
 $0<programa>1
 
 *Observamos un analisis exitoso, sin errores ni problemas, lo que deberia ser siempre que una entrada no contenga errores como los siguientes.
