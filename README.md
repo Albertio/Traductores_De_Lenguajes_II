@@ -74,6 +74,10 @@ Para comenzar a trabajar e implementar los nuevos metodos y algoritmos se modifi
 
 ![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/7.png)
 
+Para ver mas detalles y el proceso de codificacion consultar la carpeta:
+
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo2)
+
 Modulo 3. Analizador Semantico
 
 
