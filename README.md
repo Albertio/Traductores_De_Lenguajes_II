@@ -3,7 +3,9 @@ Repositorio Creado para entregar las tareas correspondientes a la materia de tra
 
 Modulo 1. Analizador Lexico
 
-Introduccion.
+Se realiza un interfaz temporal para mostrar todo lo respectivo:
+
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/4.png)
 
 Se realizan diccionarios para cada uno de los tipos de datos establecidos en la actividad, es decir, arreglos con los elementos especificos que pueden o deben contener una palabra en cuestion para ser considerada de algun tipo posible, los tipos a usar son los siguientes:
 
@@ -28,6 +30,26 @@ Identificadores:
 ![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/3.png)
 
 Ahora, tras tener todo listo pasamos a la parte de codificacion.
+
+Para ello se muestra a detalle lo realizado en la carpeta:
+
+https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo1
+
+Los resultados del Analisis Lexico:
+El codigo que se va a probar:
+
+int main()
+{
+	while(numero ==1)
+	{
+	}
+	flotante = 2.5;
+	error = 123nombre;
+	return 0;
+}
+
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/5.png)
+
 
 Modulo 2. Analizador Sintactico
 
