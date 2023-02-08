@@ -53,6 +53,26 @@ int main()
 
 Modulo 2. Analizador Sintactico
 
+Para realizar el analisis sintactico y mas adelante poder realizar un analisis semantico, se deben realizar un par de clases nuevas, asi como hacer clases que heredan del objeto que se almacenara en nuestra pila.
+
+Es decir, para esta práctica sera necesario crear una clase ElementoPila (EP) y modificaras la clase pila para que acepte objetos de este tipo en lugar de enteros.
+
+Necesitaras crear 3 clases más, las cuales heredan de ElementoPila, las clases son:
+- Terminal -> (que llamaremos T)
+- No terminal -> (que llamaremos NT)
+- Estado -> (que llamaremos E)
+
+Entonces para esta actividad sera necesario hacer uso de una tabla de una analizador sintactico LR:
+
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/6.png)
+
+*Nota: considerar que lo mostrado aqui solo es una parte de la tabla
+
+Ademas de esto, se debera crear un automata para que se haga el analisis sintactico de manera similar a como se realizaria a mano.
+
+Para comenzar a trabajar e implementar los nuevos metodos y algoritmos se modifica el interfaz para hacer un poco de espacio extra para el analisis sintactico.
+
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/7.png)
 
 Modulo 3. Analizador Semantico
 
