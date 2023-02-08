@@ -244,7 +244,7 @@ namespace AbyssC
                                     word += text[i].ToString();
                                 }
                             }
-                            else if(word == "!")
+                            else if(word == "!" || word == "<" || word == ">")
                             {
                                 if("=" == text[i + 1].ToString())
                                 {
@@ -1708,15 +1708,20 @@ namespace AbyssC
                     if (programa[i + 2][0] == '(')
                     {
                         valor = "<Funcion>";
-                    }
-                    if (semantico.FindVoid(variable) > -1 || semantico.FindVoid(variable) > -1)
-                    {
-                        Results_Console.Text += "'" + variable + "' -> was defined before" + "\r\n";
+                        if (semantico.FindVoid(variable) > -1 || semantico.FindVoid(variable) > -1)
+                        {
+                            Results_Console.Text += "'" + variable + "' -> was defined before" + "\r\n";
+                        }
+                        else
+                        {
+                            Results_Semantico.Text += "void" + " " + variable + " = " + valor + "\r\n";
+                            semantico.AddDefinido(variable, "void", valor);
+                        }
                     }
                     else
                     {
-                        Results_Semantico.Text += "void" + " " + variable + " = " + valor + "\r\n";
-                        semantico.AddDefinido(variable, "void", valor);
+                        Results_Console.Text += "'" + variable + "' -> not can be <type> void" + "\r\n";
+                        error = true;
                     }
                 }
                 i++;
@@ -1744,7 +1749,7 @@ namespace AbyssC
                     }
                     if (semantico.FindInt(variable) == -1 && semantico.FindFloat(variable) == -1 && semantico.FindVoid(variable) == -1)
                     {
-                        Results_Console.Text += " ' " + variable + " ' " + " -> No Definida" + "\r\n";
+                        Results_Console.Text += "'" + variable + "'" + " -> No Definida" + "\r\n";
                         error = true;
                     }
                 }
@@ -1759,8 +1764,8 @@ namespace AbyssC
             i = 0;
             string tipo;
             string variable2;
-            int entero = 0;
-            float flotante = 0;
+            int entero;
+            float flotante;
             while (i < programa.Count)
             {
                 variable = "";
@@ -1897,7 +1902,7 @@ namespace AbyssC
                                 }
                             }
 
-                        } while (programa[i + 1] != "):parentesisClose:15");
+                        } while (programa[i + 1] != "):parentesisClose:15" && programa[i + 1] != "&:opAnd:9" && programa[i + 1] != "|:opOr:8");
                     }
                 }
                 i++;
