@@ -56,8 +56,9 @@ namespace AbyssC
             this.console.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.console.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.console.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.console.Font = new System.Drawing.Font("p5hatty", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.console.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.console.ForeColor = System.Drawing.Color.White;
+            this.console.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.console.Location = new System.Drawing.Point(14, 57);
             this.console.Multiline = true;
             this.console.Name = "console";
@@ -65,6 +66,7 @@ namespace AbyssC
             this.console.Size = new System.Drawing.Size(438, 309);
             this.console.TabIndex = 0;
             this.console.TabStop = false;
+            this.console.WordWrap = false;
             // 
             // Archivo
             // 
@@ -87,7 +89,7 @@ namespace AbyssC
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // Open
             // 
@@ -162,7 +164,7 @@ namespace AbyssC
             this.Results.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Results.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Results.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Results.Font = new System.Drawing.Font("p5hatty", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Results.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Results.ForeColor = System.Drawing.Color.White;
             this.Results.Location = new System.Drawing.Point(691, 57);
             this.Results.Multiline = true;
@@ -200,7 +202,7 @@ namespace AbyssC
             this.Results_Sintactico.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Results_Sintactico.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Results_Sintactico.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Results_Sintactico.Font = new System.Drawing.Font("p5hatty", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Results_Sintactico.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Results_Sintactico.ForeColor = System.Drawing.Color.White;
             this.Results_Sintactico.Location = new System.Drawing.Point(691, 224);
             this.Results_Sintactico.Multiline = true;
@@ -228,7 +230,7 @@ namespace AbyssC
             this.Results_Console.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Results_Console.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Results_Console.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Results_Console.Font = new System.Drawing.Font("p5hatty", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Results_Console.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Results_Console.ForeColor = System.Drawing.Color.White;
             this.Results_Console.Location = new System.Drawing.Point(16, 391);
             this.Results_Console.Multiline = true;
@@ -237,6 +239,7 @@ namespace AbyssC
             this.Results_Console.Size = new System.Drawing.Size(436, 92);
             this.Results_Console.TabIndex = 6;
             this.Results_Console.TabStop = false;
+            this.Results_Console.WordWrap = false;
             // 
             // Results_Semantico
             // 
@@ -244,7 +247,7 @@ namespace AbyssC
             this.Results_Semantico.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Results_Semantico.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Results_Semantico.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Results_Semantico.Font = new System.Drawing.Font("p5hatty", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Results_Semantico.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Results_Semantico.ForeColor = System.Drawing.Color.White;
             this.Results_Semantico.Location = new System.Drawing.Point(462, 57);
             this.Results_Semantico.Multiline = true;

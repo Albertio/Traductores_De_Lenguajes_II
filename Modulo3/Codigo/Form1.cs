@@ -231,9 +231,34 @@ namespace AbyssC
                         Lexico.Add(word + ":" + Resultados[x] + ":" + x.ToString());
                         Results.Text += word + " -> " + Resultados[x] + "\r\n";
                     }
-                    if(text[i] != ' ' && text[i] != '\t')
+                    if (text[i] != ' ' && text[i] != '\t')
                     {
-                        x = AnalizadorLexico(text[i].ToString());
+                        if (i + 1 < text.Length)
+                        {
+                            word = text[i].ToString();
+                            if (word == "=" || word == "&" || word == "|")
+                            {
+                                if(word == text[i + 1].ToString())
+                                {
+                                    i++;
+                                    word += text[i].ToString();
+                                }
+                            }
+                            else if(word == "!")
+                            {
+                                if("=" == text[i + 1].ToString())
+                                {
+                                    i++;
+                                    word += "=";
+                                }
+                            }
+                            x = AnalizadorLexico(word);
+                        }
+                        else
+                        {
+                            x = AnalizadorLexico(text[i].ToString());
+                        }
+                        
                     }
                     else
                     {
@@ -284,7 +309,17 @@ namespace AbyssC
             #endregion
             //Fase 3. Analisis Semantico
             #region Semantico
-            AnalizadorSemantico(Lexico);
+            if (!error)
+            {
+                AnalizadorSemantico(Lexico);
+            }
+            #endregion
+            //Fase 4. Codigo Objeto
+            #region Ejecutar
+            if(!error)
+            {
+                Ejecucion();
+            }
             #endregion
         }
         public int AnalizadorLexico(string word)//Aqui nos encargamos de buscar a donde pertenece
@@ -1559,6 +1594,7 @@ namespace AbyssC
                             }
                             else if (accion == 0)
                             {
+                                error = true;
                                 ErroresSintacticos(columna);
                                 parcing = false;
 
@@ -1656,6 +1692,33 @@ namespace AbyssC
                     }
                     
                 }
+                if (element == "void:tipo:4")
+                {
+                    foreach (char caracter in programa[i + 1])
+                    {
+                        if (caracter == ':')
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            variable += caracter;
+                        }
+                    }
+                    if (programa[i + 2][0] == '(')
+                    {
+                        valor = "<Funcion>";
+                    }
+                    if (semantico.FindVoid(variable) > -1 || semantico.FindVoid(variable) > -1)
+                    {
+                        Results_Console.Text += "'" + variable + "' -> was defined before" + "\r\n";
+                    }
+                    else
+                    {
+                        Results_Semantico.Text += "void" + " " + variable + " = " + valor + "\r\n";
+                        semantico.AddDefinido(variable, "void", valor);
+                    }
+                }
                 i++;
             }
 
@@ -1679,7 +1742,7 @@ namespace AbyssC
                             variable += caracter;
                         }
                     }
-                    if (semantico.FindInt(variable) == -1 && semantico.FindFloat(variable) == -1)
+                    if (semantico.FindInt(variable) == -1 && semantico.FindFloat(variable) == -1 && semantico.FindVoid(variable) == -1)
                     {
                         Results_Console.Text += " ' " + variable + " ' " + " -> No Definida" + "\r\n";
                         error = true;
@@ -1706,7 +1769,7 @@ namespace AbyssC
                 if (element.Contains("identificador"))
                 {
                     //Operacion inminente
-                    if(programa[i + 1][0] == '=')
+                    if(programa[i + 1] == "=:igual:18")
                     {
                         //Variable tras =
                         foreach (char caracter in element)
@@ -1769,9 +1832,73 @@ namespace AbyssC
                                 }
                             }
                             
-                        } while (programa[i + 1][0] != ';');
+                        } while (programa[i + 1] != ";:puntoComa:12");
                     }
-                    
+                    else if (programa[i + 1] == "=:opIgualdad:11")
+                    {
+                        //Variable tras =
+                        foreach (char caracter in element)
+                        {
+                            if (caracter == ':')
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                variable += caracter;
+                            }
+                        }
+                        if (semantico.FindInt(variable) > -1)
+                        {
+                            tipo = "int";
+                        }
+                        else
+                        {
+                            tipo = "float";
+                        }
+                        do
+                        {
+                            variable2 = "";
+                            i++;
+                            i++;
+                            foreach (char caracter in programa[i])
+                            {
+                                if (caracter == ':')
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    variable2 += caracter;
+                                }
+                            }
+                            if (tipo == "int")
+                            {
+                                if (Int32.TryParse(variable2, out entero))
+                                {
+
+                                }
+                                else if (semantico.FindInt(variable2) == -1)
+                                {
+                                    Results_Console.Text += " ' " + variable2 + " ' " + " -> Incoherencia de tipo" + "\r\n";
+                                    error = true;
+                                }
+                            }
+                            else
+                            {
+                                if (float.TryParse(variable2, out flotante))
+                                {
+
+                                }
+                                else if (semantico.FindFloat(variable2) == -1)
+                                {
+                                    Results_Console.Text += " ' " + variable2 + " ' " + " -> Incoherencia de tipo" + "\r\n";
+                                    error = true;
+                                }
+                            }
+
+                        } while (programa[i + 1] != "):parentesisClose:15");
+                    }
                 }
                 i++;
             }
@@ -1782,8 +1909,11 @@ namespace AbyssC
             else
             {
                 Results_Console.Text += "Analisis Semantico Fallido!" + "\r\n";
-
             }
+
+        }
+        public void Ejecucion()
+        {
 
         }
         public void PopPila(int tokens)

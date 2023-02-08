@@ -14,6 +14,8 @@ namespace AbyssC
         List<string> floatDefined = new List<string>();
         List<string> floatValue = new List<string>();
 
+        List<string> voidDefined = new List<string>();
+
         public Semantico()
         {
 
@@ -25,10 +27,14 @@ namespace AbyssC
                 intDefined.Add(cadena);
                 intValue.Add(valor);
             }
-            else
+            else if(tipo == "float")
             {
                 floatDefined.Add(cadena);
                 floatValue.Add(valor);
+            }
+            else if(tipo == "void")
+            {
+                voidDefined.Add(cadena);
             }
         }
         public int FindInt(string cadena)
@@ -51,6 +57,21 @@ namespace AbyssC
             while (i < floatDefined.Count)
             {
                 if (floatDefined[i] == cadena)
+                {
+                    return i;
+                }
+                i++;
+            }
+
+            return -1;
+        }
+
+        public int FindVoid(string cadena)
+        {
+            int i = 0;
+            while (i < voidDefined.Count)
+            {
+                if (voidDefined[i] == cadena)
                 {
                     return i;
                 }
