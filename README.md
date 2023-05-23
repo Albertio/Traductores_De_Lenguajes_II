@@ -74,9 +74,13 @@ Para comenzar a trabajar e implementar los nuevos metodos y algoritmos se modifi
 
 ![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/7.png)
 
-Para ver mas detalles y el proceso de codificacion consultar la carpeta:
+Tras esto es necesario tener en cuenta las siguientes reglas asi como haber desarrollado las reducciones correspondientes a la longitud en palabras que se aplicaran a nuestra pila para ser procesadas y podernos desplazar por nuestra tabla LR:
 
-<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo2">Modulo 2</a>
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/10.png)
+
+Ademas de tener bien en cuenta asi como integrar a nuestro algoritmo la tabla LR de la que ya se ha hablado con anterioridad:
+
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/11.png)
 
 Para finalizar, comprobamos las entradas y salidas de nuestro analizador sintactico, asi como el estado de la pila durante todo el proceso de analisis.
 
@@ -89,6 +93,10 @@ Contenido en la pila:
 ![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/9.png)
 
 *Observamos un analisis exitoso, sin errores ni problemas, lo que deberia ser siempre que una entrada no contenga errores como los siguientes.
+
+Para ver mas detalles y el proceso de codificacion consultar la carpeta:
+
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo2">Modulo 2</a>
 
 Modulo 3. Analizador Semantico
 
