@@ -82,7 +82,9 @@ Ademas de tener bien en cuenta asi como integrar a nuestro algoritmo la tabla LR
 
 ![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/11.png)
 
-Para finalizar, comprobamos las entradas y salidas de nuestro analizador sintactico, asi como el estado de la pila durante todo el proceso de analisis.
+Tras definir todo lo anterior para realizar la validacion de los componentes en nuestra pila y su posterior almacenamiento para procesar los resultados en lo que en el futuro sera el analizador semantico, simplemente observamos los resultados para comprobar el funcionamiento.
+
+Entonces para finalizar, comprobamos las entradas y salidas de nuestro analizador sintactico, asi como el estado de la pila durante todo el proceso de analisis.
 
 Comprobacion:
 
