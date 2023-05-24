@@ -103,9 +103,10 @@ Para ver mas detalles y el proceso de codificacion consultar la carpeta:
 Modulo 3. Analizador Semantico
 El desarrollo de un analizador semántico implica varias etapas y consideraciones importantes. A continuación, se describe el proceso general para crear un analizador semántico:
 
-Definir las reglas semánticas: Antes de comenzar a implementar el analizador semántico, es esencial comprender las reglas semánticas del lenguaje de programación en el que se trabajará. Estas reglas especifican las restricciones y las verificaciones que deben aplicarse al código fuente. Por ejemplo, las reglas pueden abarcar comprobaciones de tipos, alcance de variables, restricciones de herencia, entre otras.
+Definir las reglas semánticas: Antes de comenzar a implementar el analizador semántico, es esencial comprender las reglas semánticas del lenguaje de programación en el que se trabajará. Por fortuna se aclaro desde un comienzo que estas reglas seran ni mas ni menos lo mas similar posible al lenguaje de programacion "c".
 
-Obtener el árbol sintáctico: El analizador semántico se basa en el árbol sintáctico generado por el analizador sintáctico. Este árbol representa la estructura jerárquica del programa. Puede ser construido mediante técnicas de análisis sintáctico, como LR o LL, o utilizando herramientas como generadores de analizadores sintácticos automáticos (por ejemplo, ANTLR, Yacc, Bison).
+Obtener el árbol sintáctico: El analizador semántico se basa en el árbol sintáctico generado por el analizador sintáctico.
+Por lo que es de vital importancia que a este punto nuestro analizador sintactico funciones satisfactoriamente, de lo contrario, podriamos encontrarnos con problemas no deseados.
 
 Diseñar las estructuras de datos: Para llevar a cabo las comprobaciones semánticas, es necesario diseñar las estructuras de datos adecuadas para almacenar información relevante sobre el código fuente. Esto puede incluir tablas de símbolos para variables y funciones, tablas de tipos, pilas de alcance, entre otros. Estas estructuras ayudarán a realizar verificaciones coherentes y eficientes.
 
@@ -125,6 +126,10 @@ Enseguida vemos un par de pruebas:
 *Incoherencia por omision de definicion*
 ![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/15.png)
 
+Cada punto asi como mas muestras de codigos son posibles encontrarlas dentro de la carpeta correspondiente al Modulo 3:
+
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo3">Modulo 3</a>
+
 Modulo 4. Codigo Objeto
 
 El desarrollo de la fase de generación de código objeto implica varias tareas clave.
@@ -140,4 +145,6 @@ Optimización de código: En esta etapa, se pueden aplicar técnicas de optimiza
 Resolución de referencias: Durante la generación de código objeto, es posible que se hagan referencias a símbolos externos, como funciones o variables definidas en otros módulos o bibliotecas. En esta etapa, se debe implementar la resolución de referencias para asegurar que estas referencias se enlacen correctamente durante el proceso de enlace final.
 
 
+Para finalizar se invita a ver los resultados asi como una documentacion mas extensa en su carpeta correspondiente:
 
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo4">Modulo 4</a>
