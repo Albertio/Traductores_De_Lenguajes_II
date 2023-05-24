@@ -130,7 +130,7 @@ Cada punto asi como mas muestras de codigos son posibles encontrarlas dentro de 
 
 <a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo3">Carpeta de Modulo 3</a><br><br>
 
-<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo4">Modulo 4. Codigo Objeto</a><br>
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo4">Modulo 4. Codigo Objeto (Proyecto Final)</a><br>
 En esta ocasion el desarrollo de la fase de generación de código objeto implica varias tareas clave objetivas:
 
 Diseño de la representación intermedia: Antes de comenzar a generar el código objeto, es necesario diseñar una representación intermedia adecuada. Esta representación puede ser un árbol de sintaxis abstracta, un código de tres direcciones, un grafo de flujo de control u otra estructura que capture la semántica del programa de manera eficiente. Esta representación intermedia servirá como base para generar el código objeto.
@@ -146,4 +146,4 @@ Resolución de referencias: Durante la generación de código objeto, es posible
 
 Para finalizar se invita a ver los resultados asi como una documentacion mas extensa en su carpeta correspondiente:
 
-<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo4">Carpeta de Modulo 4</a>
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/ProyectoFinal">Carpeta de Proyecto Final</a>
