@@ -1,7 +1,7 @@
 # Traductores_De_Lenguajes_II
 Repositorio Creado para entregar las tareas correspondientes a la materia de traductores de lenguajes 2
 
-<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo1">Modulo 1. Analizador Lexico</a>
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo1">Modulo 1. Analizador Lexico</a><br>
 
 Se realiza un interfaz temporal para mostrar todo lo respectivo:
 
@@ -33,7 +33,7 @@ Ahora, tras tener todo listo pasamos a la parte de codificacion.
 
 Para ello se muestra a detalle lo realizado en la carpeta:
 
-<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo1">Carpeta de Modulo 1</a>
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo1">Carpeta de Modulo 1</a><br><br>
 
 Los resultados del Analisis Lexico:
 El codigo que se va a probar:
@@ -51,7 +51,7 @@ int main()
 ![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/5.png)
 
 
-<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo2">Modulo 2. Analizador Sintactico</a>
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo2">Modulo 2. Analizador Sintactico</a><br>
 
 Para realizar el analisis sintactico y mas adelante poder realizar un analisis semantico, se deben realizar un par de clases nuevas, asi como hacer clases que heredan del objeto que se almacenara en nuestra pila.
 
@@ -98,9 +98,9 @@ Contenido en la pila:
 
 Para ver mas detalles y el proceso de codificacion consultar la carpeta:
 
-<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo2">Carpeta de Modulo 2</a>
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo2">Carpeta de Modulo 2</a><br><br>
 
-<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo3">Modulo 3. Analizador Semantico</a>
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo3">Modulo 3. Analizador Semantico</a><br>
 El desarrollo de un analizador semántico implica varias etapas y consideraciones importantes. A continuación, se describe el proceso general para crear un analizador semántico:
 
 Definir las reglas semánticas: Antes de comenzar a implementar el analizador semántico, es esencial comprender las reglas semánticas del lenguaje de programación en el que se trabajará. Por fortuna se aclaro desde un comienzo que estas reglas seran ni mas ni menos lo mas similar posible al lenguaje de programacion "c".
@@ -128,11 +128,10 @@ Enseguida vemos un par de pruebas:
 
 Cada punto asi como mas muestras de codigos son posibles encontrarlas dentro de la carpeta correspondiente al Modulo 3:
 
-<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo3">Carpeta de Modulo 3</a>
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo3">Carpeta de Modulo 3</a><br><br>
 
-Modulo 4. Codigo Objeto
-
-El desarrollo de la fase de generación de código objeto implica varias tareas clave.
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo4">Modulo 4. Codigo Objeto</a><br>
+En esta ocasion el desarrollo de la fase de generación de código objeto implica varias tareas clave objetivas:
 
 Diseño de la representación intermedia: Antes de comenzar a generar el código objeto, es necesario diseñar una representación intermedia adecuada. Esta representación puede ser un árbol de sintaxis abstracta, un código de tres direcciones, un grafo de flujo de control u otra estructura que capture la semántica del programa de manera eficiente. Esta representación intermedia servirá como base para generar el código objeto.
 
