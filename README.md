@@ -143,6 +143,9 @@ Optimización de código: En esta etapa, se pueden aplicar técnicas de optimiza
 
 Resolución de referencias: Durante la generación de código objeto, es posible que se hagan referencias a símbolos externos, como funciones o variables definidas en otros módulos o bibliotecas. En esta etapa, se debe implementar la resolución de referencias para asegurar que estas referencias se enlacen correctamente durante el proceso de enlace final.
 
+Para ver los resultados de nuestro trabajo tras la revision de nuestro codigo, y convertirlo a ensamblador:
+
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/20.png)
 
 Para finalizar se invita a ver los resultados asi como una documentacion mas extensa en su carpeta correspondiente:
 
