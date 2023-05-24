@@ -146,4 +146,4 @@ Resolución de referencias: Durante la generación de código objeto, es posible
 
 Para finalizar se invita a ver los resultados asi como una documentacion mas extensa en su carpeta correspondiente:
 
-<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo4">Modulo 4</a>
+<a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo4">Carpeta de Modulo 4</a>
