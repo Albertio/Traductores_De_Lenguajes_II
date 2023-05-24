@@ -101,10 +101,43 @@ Para ver mas detalles y el proceso de codificacion consultar la carpeta:
 <a href="https://github.com/Albertio/Traductores_De_Lenguajes_II/tree/main/Modulo2">Modulo 2</a>
 
 Modulo 3. Analizador Semantico
+El desarrollo de un analizador semántico implica varias etapas y consideraciones importantes. A continuación, se describe el proceso general para crear un analizador semántico:
 
+Definir las reglas semánticas: Antes de comenzar a implementar el analizador semántico, es esencial comprender las reglas semánticas del lenguaje de programación en el que se trabajará. Estas reglas especifican las restricciones y las verificaciones que deben aplicarse al código fuente. Por ejemplo, las reglas pueden abarcar comprobaciones de tipos, alcance de variables, restricciones de herencia, entre otras.
+
+Obtener el árbol sintáctico: El analizador semántico se basa en el árbol sintáctico generado por el analizador sintáctico. Este árbol representa la estructura jerárquica del programa. Puede ser construido mediante técnicas de análisis sintáctico, como LR o LL, o utilizando herramientas como generadores de analizadores sintácticos automáticos (por ejemplo, ANTLR, Yacc, Bison).
+
+Diseñar las estructuras de datos: Para llevar a cabo las comprobaciones semánticas, es necesario diseñar las estructuras de datos adecuadas para almacenar información relevante sobre el código fuente. Esto puede incluir tablas de símbolos para variables y funciones, tablas de tipos, pilas de alcance, entre otros. Estas estructuras ayudarán a realizar verificaciones coherentes y eficientes.
+
+Implementar las comprobaciones semánticas: En esta etapa, se implementan las reglas semánticas definidas anteriormente. Se recorre el árbol sintáctico y se aplican las comprobaciones correspondientes a cada nodo. Por ejemplo, se pueden verificar las asignaciones de tipos, la declaración y el uso correcto de variables, la resolución de nombres, la herencia adecuada, etc.
+
+Manejar errores semánticos: Durante el análisis semántico, es posible encontrar errores en el código fuente que violen las reglas semánticas. En esta etapa, se deben manejar estos errores de manera apropiada, generando mensajes de error descriptivos para ayudar al programador a corregir los problemas detectados.
+
+Realizar pruebas y depuración: Una vez implementado el analizador semántico, es esencial realizar pruebas exhaustivas para verificar su correcto funcionamiento. Se deben realizar pruebas con casos de prueba representativos que cubran diversas situaciones semánticas, incluyendo tanto escenarios válidos como inválidos. Además, se deben depurar posibles errores y realizar mejoras si es necesario.
+
+Enseguida vemos un par de pruebas:
+*Un error por incoherencia de tipo*
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/12.png)
+*El error se resuelve si colocamos el tipo correcto*
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/13.png)
+*Incoherencia de tipo entre variables*
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/14.png)
+*Incoherencia por omision de definicion*
+![alt tag](https://github.com/Albertio/Traductores_De_Lenguajes_II/blob/main/ProyectoFinal/Imagenes/15.png)
 
 Modulo 4. Codigo Objeto
 
+El desarrollo de la fase de generación de código objeto implica varias tareas clave.
+
+Diseño de la representación intermedia: Antes de comenzar a generar el código objeto, es necesario diseñar una representación intermedia adecuada. Esta representación puede ser un árbol de sintaxis abstracta, un código de tres direcciones, un grafo de flujo de control u otra estructura que capture la semántica del programa de manera eficiente. Esta representación intermedia servirá como base para generar el código objeto.
+
+Traducción de construcciones de alto nivel a instrucciones de bajo nivel: En esta etapa, se implementan reglas y algoritmos para traducir las construcciones de alto nivel del lenguaje de programación en instrucciones de bajo nivel específicas de la arquitectura de la máquina objetivo. Esto puede incluir la asignación de registros, la gestión de la memoria, la generación de instrucciones aritméticas y lógicas, entre otros aspectos.
+
+Gestión de la memoria: Durante la generación de código objeto, se deben tomar decisiones sobre la asignación y el uso eficiente de la memoria. Esto incluye la asignación de registros para variables, el manejo de la pila de llamadas y la gestión de datos estáticos. También es necesario considerar aspectos como el acceso a la memoria y la alineación de datos.
+
+Optimización de código: En esta etapa, se pueden aplicar técnicas de optimización para mejorar la eficiencia y el rendimiento del código objeto generado. Esto puede implicar la eliminación de código redundante, la reorganización de instrucciones para minimizar saltos condicionales, la propagación de constantes, la fusión de instrucciones, entre otras técnicas.
+
+Resolución de referencias: Durante la generación de código objeto, es posible que se hagan referencias a símbolos externos, como funciones o variables definidas en otros módulos o bibliotecas. En esta etapa, se debe implementar la resolución de referencias para asegurar que estas referencias se enlacen correctamente durante el proceso de enlace final.
 
 
 
