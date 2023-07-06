@@ -144,7 +144,7 @@ namespace AbyssC
                     {
                         x = -1;
                     }
-                    
+
                     if (x > -1)
                     {
                         Lexico.Add(word);
